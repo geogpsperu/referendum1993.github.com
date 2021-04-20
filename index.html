@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        #map {
+            width: 410px;
+            height: 617px;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/ReferendumConstitucional1993_1.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[-19.226011470640643,-81.64512927462626],[0.8364777654244158,-68.33538031801724]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://www.geogpsperu.com" target="_blank">GEO GPS PERÚ</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://www.geogpsperu.com">Suyo Pomalía</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_Mapabase_0');
+        map.getPane('pane_Mapabase_0').style.zIndex = 400;
+        var layer_Mapabase_0 = L.tileLayer('https://basemaps.cartocdn.com/rastertiles/light_nolabels/{z}/{x}/{y}.png', {
+            pane: 'pane_Mapabase_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_Mapabase_0;
+        map.addLayer(layer_Mapabase_0);
+        function pop_ReferendumConstitucional1993_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Departamento:</th>\
+                        <td>' + (feature.properties['NOMBDEP'] !== null ? autolinker.link(feature.properties['NOMBDEP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Sí aprueba:</th>\
+                        <td>' + (feature.properties['si_voto'] !== null ? autolinker.link(feature.properties['si_voto'].toLocaleString()) : '') + '</td>\
+                        <th scope="row"></th>\
+                        <td>(' + (feature.properties['si_porcent'] !== null ? autolinker.link(feature.properties['si_porcent'].toLocaleString()) : '') + '%)</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">No aprueba:</th>\
+                        <td>' + (feature.properties['no_voto'] !== null ? autolinker.link(feature.properties['no_voto'].toLocaleString()) : '') + '</td>\
+                        <th scope="row"></th>\
+                        <td>(' + (feature.properties['no_porcent'] !== null ? autolinker.link(feature.properties['no_porcent'].toLocaleString()) : '') + '%)</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Blanco:</th>\
+                        <td>' + (feature.properties['blanco_vot'] !== null ? autolinker.link(feature.properties['blanco_vot'].toLocaleString()) : '') + '</td>\
+                        <th scope="row"></th>\
+                        <td>(' + (feature.properties['blanco_por'] !== null ? autolinker.link(feature.properties['blanco_por'].toLocaleString()) : '') + '%)</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Nulo:</th>\
+                        <td>' + (feature.properties['nulo_voto'] !== null ? autolinker.link(feature.properties['nulo_voto'].toLocaleString()) : '') + '</td>\
+                        <th scope="row"></th>\
+                        <td>(' + (feature.properties['nulo_porce'] !== null ? autolinker.link(feature.properties['nulo_porce'].toLocaleString()) : '') + '%)</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Total:</th>\
+                        <td>' + (feature.properties['total'] !== null ? autolinker.link(feature.properties['total'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_ReferendumConstitucional1993_1_0(feature) {
+            switch(String(feature.properties['gano'])) {
+                case 'NO':
+                    return {
+                pane: 'pane_ReferendumConstitucional1993_1',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(190,12,15,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'SI':
+                    return {
+                pane: 'pane_ReferendumConstitucional1993_1',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(10,59,128,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_ReferendumConstitucional1993_1');
+        map.getPane('pane_ReferendumConstitucional1993_1').style.zIndex = 401;
+        map.getPane('pane_ReferendumConstitucional1993_1').style['mix-blend-mode'] = 'normal';
+        var layer_ReferendumConstitucional1993_1 = new L.geoJson(json_ReferendumConstitucional1993_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ReferendumConstitucional1993_1',
+            layerName: 'layer_ReferendumConstitucional1993_1',
+            pane: 'pane_ReferendumConstitucional1993_1',
+            onEachFeature: pop_ReferendumConstitucional1993_1,
+            style: style_ReferendumConstitucional1993_1_0,
+        });
+        bounds_group.addLayer(layer_ReferendumConstitucional1993_1);
+        map.addLayer(layer_ReferendumConstitucional1993_1);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'Referendum Constitucional 1993<br /><table><tr><td style="text-align: center;"><img src="legend/ReferendumConstitucional1993_1_NoAprueba47760.png" /></td><td>No Aprueba la Nueva Constitución</td></tr><tr><td style="text-align: center;"><img src="legend/ReferendumConstitucional1993_1_SíAprueba52241.png" /></td><td>Sí Aprueba la Nueva Constitución</td></tr></table>': layer_ReferendumConstitucional1993_1,"Mapa base": layer_Mapabase_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
